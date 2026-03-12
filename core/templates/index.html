@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8 p-8 md:p-12 min-h-[70vh] bg-gradient-to-b from-emerald-50/30 to-white">
+    
+    <div class="md:col-span-5 flex flex-col justify-end pb-12">
+        <h1 class="text-5xl md:text-8xl font-light tracking-tighter leading-[0.9] mb-8 text-zinc-800">
+            <span id="season-title" class="transition-opacity duration-500 text-emerald-900">Соловьный</span> <br> 
+            <span class="text-emerald-200/60">Пруд</span>
+        </h1>
+        <p id="season-desc" class="text-emerald-800/70 text-sm max-w-xs leading-relaxed uppercase tracking-wider border-l-2 border-emerald-100 pl-4">
+            Спящая экосистема под покровом льда и инея.
+        </p>
+    </div>
+
+    <div class="md:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="relative group overflow-hidden bg-emerald-100/20 aspect-[3/4]">
+            <img id="photo-1" 
+                 src="https://images.unsplash.com/photo-1477332552946-cfb384aeaf1c?q=80&w=1000" 
+                 class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition duration-1000 ease-in-out">
+        </div>
+        
+        <div class="relative group overflow-hidden bg-emerald-100/20 aspect-[3/4] md:mt-12">
+            <img id="photo-2" 
+                 src="https://images.unsplash.com/photo-1517294807220-6e1473238611?q=80&w=1000" 
+                 class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition duration-1000 ease-in-out">
+        </div>
+    </div>
+</section>
+
+<div class="flex flex-wrap justify-center gap-4 md:gap-8 py-16 border-t border-emerald-50">
+    <button onclick="setSeason('winter', event)" class="season-btn active group flex flex-col items-center">
+        <span class="text-[10px] mb-2 text-emerald-300 group-hover:text-emerald-600 transition tracking-widest"></span>
+        <div class="px-8 py-3 border border-emerald-800 text-emerald-900 text-xs uppercase tracking-widest transition-all btn-label bg-emerald-50/50">01</div>
+    </button>
+    
+    <button onclick="setSeason('spring', event)" class="season-btn group flex flex-col items-center">
+        <span class="text-[10px] mb-2 text-emerald-300 group-hover:text-emerald-600 transition tracking-widest"></span>
+        <div class="px-8 py-3 border border-emerald-100 text-zinc-400 text-xs uppercase tracking-widest hover:border-emerald-400 hover:text-emerald-800 transition-all btn-label">02</div>
+    </button>
+
+    <button onclick="setSeason('summer', event)" class="season-btn group flex flex-col items-center">
+        <span class="text-[10px] mb-2 text-emerald-300 group-hover:text-emerald-600 transition tracking-widest"></span>
+        <div class="px-8 py-3 border border-emerald-100 text-zinc-400 text-xs uppercase tracking-widest hover:border-emerald-400 hover:text-emerald-800 transition-all btn-label">03</div>
+    </button>
+
+    <button onclick="setSeason('autumn', event)" class="season-btn group flex flex-col items-center">
+        <span class="text-[10px] mb-2 text-emerald-300 group-hover:text-emerald-600 transition tracking-widest"></span>
+        <div class="px-8 py-3 border border-emerald-100 text-zinc-400 text-xs uppercase tracking-widest hover:border-emerald-400 hover:text-emerald-800 transition-all btn-label">04</div>
+    </button>
+</div>
+
+<script>
+    const seasonData = {
+        winter: {
+            title: "Соловьиный",
+            desc: "Спящая экосистема под покровом льда и инея.",
+            imgs: [
+                "https://images.unsplash.com/photo-1477332552946-cfb384aeaf1c?q=80&w=1000",
+                "https://images.unsplash.com/photo-1517294807220-6e1473238611?q=80&w=1000"
+            ]
+        },
+        spring: {
+            title: "Соловьиный",
+            desc: "Пробуждение флоры и возвращение певчих птиц.",
+            imgs: [
+                "https://images.unsplash.com/photo-1491147334573-44cbb4602074?q=80&w=1000",
+                "https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?q=80&w=1000"
+            ]
+        },
+        summer: {
+            title: "Соловьиный",
+            desc: "Пик биологической активности и яркой зелени.",
+            imgs: [
+                "https://images.unsplash.com/photo-1501066927591-314112b5888e?q=80&w=1000",
+                "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?q=80&w=1000"
+            ]
+        },
+        autumn: {
+            title: "Соловьиный",
+            desc: "Золотая тишина и подготовка природы к покою.",
+            imgs: [
+                "https://images.unsplash.com/photo-1470509037663-253afd7f0f51?q=80&w=1000",
+                "https://images.unsplash.com/photo-1476820865390-c52aeebb9891?q=80&w=1000"
+            ]
+        }
+    };
+
+    function setSeason(key, event) {
+        const data = seasonData[key];
+        
+        // Смена текста с плавной анимацией
+        const titleEl = document.getElementById('season-title');
+        const descEl = document.getElementById('season-desc');
+        
+        titleEl.style.opacity = 0;
+        descEl.style.opacity = 0;
+        
+        setTimeout(() => {
+            titleEl.innerText = data.title;
+            descEl.innerText = data.desc;
+            titleEl.style.opacity = 1;
+            descEl.style.opacity = 1;
+        }, 300);
+
+        // Смена фото
+        document.getElementById('photo-1').src = data.imgs[0];
+        document.getElementById('photo-2').src = data.imgs[1];
+
+        // Сброс стилей у всех кнопок
+        document.querySelectorAll('.season-btn .btn-label').forEach(el => {
+            el.classList.remove('border-emerald-800', 'text-emerald-900', 'bg-emerald-50/50');
+            el.classList.add('border-emerald-100', 'text-zinc-400');
+        });
+        
+        // Установка стиля для нажатой кнопки
+        const activeLabel = event.currentTarget.querySelector('.btn-label');
+        activeLabel.classList.remove('border-emerald-100', 'text-zinc-400');
+        activeLabel.classList.add('border-emerald-800', 'text-emerald-900', 'bg-emerald-50/50');
+    }
+</script>
+{% endblock %}
